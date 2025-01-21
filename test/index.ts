@@ -41,6 +41,7 @@ const executableLambda = async (url: string, name: string): Promise<Output | nul
 }
 const title = "This is the title of example.col"
 const s3UrlFile = "https://s3file.com"
+const name = "__file_name___"
 
 afterEach(restore); //  reset each stub after the test rn
 
@@ -50,11 +51,10 @@ describe("handler", () => {
     it("should get the html from a url", async () => {
         stub(axios, "get").resolves({data: `<html><head><title>${title}</title></head></html>`})
         stub(storage, "storeHtmlFile").resolves(s3UrlFile)
-        const output = await executableLambda('http://example.com', "")
+        const output = await executableLambda('http://example.com', name)
         strictEqual(output?.title, title)
     });
     it("should extract and return the page title of a url", async () => {
-        const name = "__file_name___"
         const html = `<html><head><title>${title}</title></head></html>`
         stub(axios, "get").resolves({data:  html})
         const storeHtmlFileStub = stub(storage, "storeHtmlFile").resolves(s3UrlFile)
