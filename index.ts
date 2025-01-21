@@ -29,21 +29,28 @@ export interface Input {
 export interface Output {
     title: string;
     s3_url: string;
+    error: string;
 }
 
 export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyStructuredResultV2> => {
     const output: Output = {
         title: "Hello world",
-        s3_url: "Url goes here"
+        s3_url: "Url goes here",
+        error: ""
     }
 
     try {
+    
         const body = event.queryStringParameters as unknown as Input
+        if(!body.name || !body.url){
+            throw Error("name and url are required")
+        }
         const res = await axios.get(body.url)
         output.title = cheerio.load(res.data)("head > title").text();
         output.s3_url = await storage.storeHtmlFile(res.data, body.name)
         
     } catch (err) {
+        output.error = err
         console.log(err)
     }
 
