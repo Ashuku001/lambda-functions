@@ -1,0 +1,26 @@
+{
+  "name": "aws-lambda-html-url",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "lambda-build upload aws-lambda-html-url use-east-1",
+    "test": "mocha --recursive 'test' --extension ts --exit --require  esbuild-register --timeout 20000"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.147",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.10.7",
+    "@types/sinon": "^17.0.3",
+    "esbuild-register": "^3.6.0",
+    "mocha": "^11.0.1",
+    "sinon": "^19.0.2"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.732.0",
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0"
+  }
+}
