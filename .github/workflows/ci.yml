@@ -9,9 +9,9 @@ jobs:
             - name: Configure AWS Credentials
               uses: aws-actions/configure-aws-credentials@v4
               with:
-              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-              aws-region: us-east-1
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID || 'default-access-key-id' }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY || 'default-secret-access-key' }}
+                aws-region: us-east-1
             - uses: actions/checkout@v2 # check the repo
             - uses: actions/setup-node@v2 # setup nodejs
               with:
@@ -25,5 +25,5 @@ jobs:
               run: |
                 npm test
             - name: deploy  # run test comand
-                run: |
-                  npm run deploy
+              run: |
+                npm run deploy
